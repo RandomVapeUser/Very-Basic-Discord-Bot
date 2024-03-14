@@ -13,7 +13,7 @@ Entries_list = []
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix=f"{config.data["Prefix"]}", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=f"{config.data['Prefix']}", intents=discord.Intents.all())
 bot.remove_command("help")
 bot.remove_command("reload")
 
