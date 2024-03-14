@@ -1,10 +1,7 @@
 from datetime import timedelta, datetime
 from discord.ext import commands
-from discord.utils import get
 import discord
 import config
-import asyncio
-import os
 
 
 Entries = 0
