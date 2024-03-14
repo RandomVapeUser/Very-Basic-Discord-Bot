@@ -14,11 +14,8 @@ bot = commands.Bot(command_prefix=f"{config.data['Prefix']}", intents=discord.In
 bot.remove_command("help")
 bot.remove_command("reload")
 
+channelid = config.data['ChannelID']
 
-    
-#Dependant Function for other commands-----------------------------------------------------------------
-channelid = "YourCommandsChannelID"
- #commands
 #Welcomer
 async def sender(ctx, member: discord.Member):
     avatar = member.avatar.url
@@ -27,7 +24,7 @@ async def sender(ctx, member: discord.Member):
     embed.set_author(name=f"{member.name}", icon_url=f"{avatar}")
     embed.set_thumbnail(url=avatar)
     embed.add_field(name="Welcome to ConfigHub!", value=f"{description}", inline=False)
-    channel = bot.get_channel(1194973457914535996)
+    channel = bot.get_channel(channelid)
     await channel.send(member.mention,embed=embed)
         
 #Permissions Check
