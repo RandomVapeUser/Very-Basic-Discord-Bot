@@ -21,8 +21,8 @@ bot.remove_command("reload")
 
     
 #Dependant Function for other commands-----------------------------------------------------------------
-channelid = #CommandsChannelID
-#commands
+channelid = #BotChannelID
+ #commands
 #Welcomer
 async def sender(ctx, member: discord.Member):
     avatar = member.avatar.url
@@ -87,7 +87,7 @@ async def reload(ctx):
     await bot.get_channel(channelid).send(f"Extensions Reloaded")
 
 @bot.event
-async def on_ready(ctx):
+async def on_ready():
     try:
         datetime_final = datetime.now()
         await bot.load_extension("cmds.role")
@@ -108,8 +108,12 @@ async def on_ready(ctx):
         await bot.load_extension("cmds.say")
         channel = bot.get_channel(channelid)
         await channel.send(f"Bot Started | {datetime_final}")
-    except Exception:
-        await ctx.send(f"'''{Exception}'''")
+    except Exception as i:
+        await bot.get_channel(channelid).send("The Bot has crashed, check latest log.")
+        with open("latest.txt", "a+") as log:
+            log.write(f"{datetime_final} | {i}\n")
+            log.close()
+
 
 config.data["Online"] = True
 bot.run(config.data["Token"])
