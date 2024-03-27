@@ -4,8 +4,11 @@ from discord.ext import commands
 import discord
 import asyncio
 import emoji
+import random
 
 @commands.hybrid_command()
+
+
 async def gw(ctx, time = None, description = None, prize = None):
 
     Entries = 0
@@ -39,7 +42,10 @@ async def gw(ctx, time = None, description = None, prize = None):
         await final_embed.add_reaction(reaction)
         await asyncio.sleep(1)
         time -= 1
-        final_embed
+    else:
+        users = await embed2.reactions[0].users().flatten()
+        choice =  random.choice(users)
+        print(choice)
 
 
 
