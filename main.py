@@ -22,7 +22,7 @@ bot.remove_command("reload")
     
 #Dependant Function for other commands-----------------------------------------------------------------
 channelid = #CommandsChannelID
- #commands
+#commands
 #Welcomer
 async def sender(ctx, member: discord.Member):
     avatar = member.avatar.url
