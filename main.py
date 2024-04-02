@@ -24,15 +24,41 @@ bot.remove_command("reload")
 #Dependant Function for other commands-----------------------------------------------------------------
 channelid = 1215782656923402280
 #Welcomer
-async def sender(member: discord.Member):
+async def sender(ctx, member: discord.Member):
+    server_name = member.guild.name
     avatar = member.avatar.url
-    description = "ConfigHub is a place where you can talk about cheats and discuss configs!"
-    embed = discord.Embed(description=description, color=0xFF5733)
-    embed.set_author(name=f"Welcome to ConfigHub, {member.name}!", icon_url=avatar)
-    embed.set_thumbnail(url=avatar)
-    channel_id = 1215766481183178964 
-    channel2 = bot.get_channel(channel_id)
-    await channel2.send(embed=embed)
+    while True:
+        try:
+            with open(f"{server_name}.txt", "r+") as file:
+                description = file.read().rstrip()
+                if description == "":
+                    description = "Server Description is empty. Please set one with ?ServerDes [Description]"
+
+                embed = discord.Embed(description=server_name, color=0xFF5733)
+                embed.set_author(name=f"Welcome to ConfigHub, {member.name}!", icon_url=avatar)
+                embed.add_field(name="", value=f"{description}", inline=False)
+                embed.set_thumbnail(url=avatar)
+                
+                cheathub_channel_id = 1215766481183178964 
+                cheat_hub_serverid = 1194623585977909398
+                fanex_channel_id = 1224809925792764046
+                fanex_server_id = 1211779040684412969
+                checkid = member.guild.id
+                if checkid == cheat_hub_serverid:
+                    channel_id = cheathub_channel_id
+                if checkid == fanex_server_id:
+                    channel_id = fanex_channel_id
+                channel2 = ctx.guild.get_channel(channel_id)
+                if channel2:
+                    await channel2.send(embed=embed)
+                else:
+                    print(f"Channel with ID {channel_id} not found.")
+                break
+        except FileNotFoundError:
+            with open(f"{server_name}.txt", "w") as file:
+                file.write("")
+            continue
+
         
 #Permissions Check
 async def perms(ctx):
@@ -47,7 +73,7 @@ async def perms(ctx):
     
 @bot.event
 async def on_member_join(member: discord.Member):
-    await sender(member)
+    await sender(member,member)
 
 @bot.command()
 async def reload(ctx):
@@ -115,5 +141,6 @@ async def on_ready():
     
 config.data["Online"] = True
 bot.run(config.data["Token"])
+
 
 
