@@ -77,6 +77,8 @@ async def on_member_join(member: discord.Member):
 
 @bot.command()
 async def reload(ctx):
+    await bot.unload_extension("cmds.serverdescription")
+    await bot.load_extension("cmds.serverdescription")
     await bot.unload_extension("cmds.role")
     await bot.load_extension("cmds.role")
     await bot.unload_extension("cmds.gay")
@@ -115,6 +117,7 @@ async def reload(ctx):
 async def on_ready():
     try:
         datetime_final = datetime.now()
+        await bot.load_extension("cmds.serverdescription")
         await bot.load_extension("cmds.role")
         await bot.load_extension("cmds.gay")
         await bot.load_extension("cmds.addalt")
@@ -141,6 +144,5 @@ async def on_ready():
     
 config.data["Online"] = True
 bot.run(config.data["Token"])
-
 
 
