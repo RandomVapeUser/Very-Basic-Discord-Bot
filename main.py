@@ -1,6 +1,7 @@
 from datetime import timedelta, datetime
 from discord.ext import commands
 from discord.utils import get
+import random
 import discord
 import config
 import asyncio
@@ -21,18 +22,17 @@ bot.remove_command("reload")
 
     
 #Dependant Function for other commands-----------------------------------------------------------------
-channelid = #BotChannelID
- #commands
+channelid = 1215782656923402280
 #Welcomer
-async def sender(ctx, member: discord.Member):
+async def sender(member: discord.Member):
     avatar = member.avatar.url
-    description = "ConfigHub is a place where you can talk about cheats and discuss about configs!"
-    embed = discord.Embed()
-    embed.set_author(name=f"{member.name}", icon_url=f"{avatar}")
+    description = "ConfigHub is a place where you can talk about cheats and discuss configs!"
+    embed = discord.Embed(description=description, color=0xFF5733)
+    embed.set_author(name=f"Welcome to ConfigHub, {member.name}!", icon_url=avatar)
     embed.set_thumbnail(url=avatar)
-    embed.add_field(name="Welcome to ConfigHub!", value=f"{description}", inline=False)
-    channel = bot.get_channel(1194973457914535996)
-    await channel.send(member.mention,embed=embed)
+    channel_id = 1215766481183178964 
+    channel2 = bot.get_channel(channel_id)
+    await channel2.send(embed=embed)
         
 #Permissions Check
 async def perms(ctx):
@@ -47,8 +47,7 @@ async def perms(ctx):
     
 @bot.event
 async def on_member_join(member: discord.Member):
-    member2 = member
-    await sender(member2,member2)
+    await sender(member)
 
 @bot.command()
 async def reload(ctx):
@@ -113,10 +112,8 @@ async def on_ready():
         with open("latest.txt", "a+") as log:
             log.write(f"{datetime_final} | {i}\n")
             log.close()
-
-
+    
 config.data["Online"] = True
 bot.run(config.data["Token"])
-
 
 
