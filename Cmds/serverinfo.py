@@ -1,5 +1,7 @@
 from discord.ext import commands
+from datetime import datetime
 import discord
+
 
 async def perms(ctx):
     perm = ctx.author.guild_permissions.kick_members
@@ -11,21 +13,16 @@ async def perms(ctx):
 
 @commands.hybrid_command()
 async def serverinfo(ctx):
-    datetime = datetime.now
-    embed = discord.Embed(title="Information about ConfigHUB")
-    embed.add_field(name="**Name:**", value="ConfigHub (not real)", inline=False)
-    embed.add_field(name="**Owner**", value=f"@{ctx.guild.owner_id}", inline=False)
-    embed.add_field(name="**ID:**", value="1194623585977909398", inline=False)
-    embed.add_field(name="**Membercount:**", value=f"{discord.member_count}", inline=False)
-    embed.add_field(name="**TextChannelcount:**", value=f"{ctx.guild.textchannel_count}", inline=False)
-    embed.add_field(name="**VoiceChannelcount:**", value=f"{discord.VoiceChannel}", inline=False)
-    embed.add_field(name="**Boostercount:**", value=f"{ctx.guild.premium_subscription_count}", inline=False)
-    embed.add_field(name="**Booster tier**", value=f"{ctx.guild.premium_subscription_tier}", inline=False)
-    embed.add_field(name="**Created at**", value=f"{datetime}", inline=False)
-    try:
-        await ctx.send(embed=embed)
-    except Exception as i:
-        await ctx.send(i)
+    dateTime = ctx.guild.created_at.strftime("%Y-%m-%d %H:%M:%S")
+    embed = discord.Embed(title="Server Info")
+    embed.add_field(name="Name:", value="`ConfigHub (not real)`", inline=True)
+    embed.add_field(name="Owner:", value=f"`{ctx.guild.owner_id}`", inline=True)
+    embed.add_field(name="Server ID:", value=f"`{ctx.guild.id}`", inline=True)
+    embed.add_field(name="Member count:", value=f"`{ctx.guild.member_count}`", inline=True)
+    embed.add_field(name="Text Channels:", value=f"`{len(ctx.guild.text_channels)}`", inline=True)
+    embed.add_field(name="Voice Channels:", value=f"`{len(ctx.guild.voice_channels)}`", inline=True)
+    embed.add_field(name="Created at:", value=dateTime, inline=True)
+    await ctx.send(embed=embed)
 
 async def setup(bot):
     bot.add_command(serverinfo)
