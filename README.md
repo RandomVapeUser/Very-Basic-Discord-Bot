@@ -2,4 +2,4 @@ This Repository was only made to help in me in the making of future code (and ba
 
 Bot has errors and its in developement for my server.
 
-Basic Discord bot that runs on scripts.
+bot i make when im bored if your here to roast me your retarded.
